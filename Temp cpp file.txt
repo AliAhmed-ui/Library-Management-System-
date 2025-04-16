@@ -1,0 +1,361 @@
+// DSA Project.cpp : This file contains the 'main' function.
+/*
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <ctime>
+using namespace std;
+struct Node
+{
+    string data;
+    Node* next;
+};
+class Stack
+{
+public:
+    Node* top; // Pointer to the top of the stack
+    Stack()
+    {
+        top = nullptr;
+    }
+    void push(string value)
+    {
+        Node* newNode = new Node;
+        newNode->data = value;
+        newNode->next = top;
+        top = newNode;
+    }
+    void pop()
+    {
+        if (top)
+        {
+            Node* temp = top;
+            top = top->next;
+            delete temp;
+        }
+        else
+        {
+            cout << "Stack is empty." << endl;
+        }
+    }
+    string topElement() // Method to access the top element, renamed to avoid conflict with top pointer
+    {
+        if (top)
+        {
+            return top->data;
+        }
+        else
+        {
+            throw out_of_range("Stack is empty.");
+        }
+    }
+    bool empty()
+    {
+        return top == nullptr; // Corrected this line
+    }
+};
+void welcome();
+void userchoose(int& user);
+void admins();
+void student();
+int main()
+{
+    welcome();
+    int user = 0;
+    userchoose(user);
+    if (user == 1)
+    {
+        admins();
+    }
+    else if (user == 2)
+    {
+        student();
+    }
+    else
+    {
+        cout << "Please enter either 1 or 2" << endl;
+        cin >> user;
+        if (user == 1)
+        {
+            admins();
+        }
+        else if (user == 2)
+        {
+            student();
+        }
+    }
+    return 0; // Added return statement
+}
+void welcome()
+{
+    cout << setw(65) << "SMART LIBRARY SYSTEM" << '\n'; // Corrected typo "SYSRTEM"
+}
+void userchoose(int& user)
+{
+    cout << "Press 1 for admin login." << endl << "Press 2 for student login." << endl;
+    cin >> user;
+    while (user != 1 && user != 2)
+    {
+        cout << "Please enter either 1 or 2" << endl;
+        cin >> user;
+    }
+}
+void insert(Node*& head)
+{
+    ;
+}
+void print(Node*& head)
+{
+    ;
+}
+void sDashboard(int& temp)
+{
+    cout << "Available Book Genre: ";
+    string select;
+    ifstream file("books.txt");
+    if (!file.is_open()) 
+    {
+        cerr << "Error opening file: books.txt" << endl;
+        return;
+    }
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    string line;
+    // Read the first line for genres
+    if (getline(file, line)) {
+        size_t pos = 0;
+        while ((pos = line.find('\t')) != string::npos) 
+        {
+            string genre = line.substr(0, pos);
+            line.erase(0, pos + 1);
+            Node* newNode = new Node();
+            newNode->data = genre;
+            newNode->next = nullptr;
+            if (head == nullptr) 
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else 
+            {
+                tail->next = newNode;
+                tail = newNode;
+            }
+        }
+        // Add the last genre
+        if (!line.empty()) 
+        {
+            Node* newNode = new Node();
+            newNode->data = line;
+            newNode->next = nullptr;
+            if (head == nullptr) 
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else 
+            {
+                tail->next = newNode;
+                tail = newNode;
+            }
+        }
+    }
+    file.close();
+    Node* current = head;
+    while (current != nullptr) 
+    {
+        cout << current->data << '\t';
+        current = current->next;
+    }
+    cout << endl;
+    cout << "Select Book Genre:";
+    cin >> select;
+    cout << "Avaialable Books: " << endl;
+}
+void aDashboard()
+{
+    ;
+}
+void admins()
+{
+    cout << setw(65) << "Welcome admin!" << endl;
+    ifstream read("admin_names.txt");
+    Stack adminnames;
+    int counter = 0, temp = 0;
+    string name;
+    if (!read.is_open())
+    {
+        cerr << "Error opening file." << endl;
+        return;
+    }
+    while (read >> name)
+    {
+        adminnames.push(name);
+        counter++;
+    }
+    temp = counter;
+    read.close();
+    bool found = false;
+    while (!found)
+    {
+        cout << "Enter your name:";
+        cin >> name;
+        Stack tempStack;
+        while (!adminnames.empty())
+        {
+            string poppedName = adminnames.topElement();
+            adminnames.pop();
+            tempStack.push(poppedName);
+            //Here we are comparing all the names with the entered name.We use 2 stacks, one to get the name which is in stack, then it will be 
+            //checked and then stored again in a second stack.
+            if (poppedName == name)
+            {
+                found = true;
+                break;
+            }
+            counter--;
+        }
+        while (!tempStack.empty())
+        {
+            adminnames.push(tempStack.topElement());
+            tempStack.pop();
+        }
+        //Here the first stack is stored again so that it can be used again if the username is enetered incorrectly.
+        if (!found)
+        {
+            cout << "User not found. Please try again." << endl;
+            counter = temp;
+        }
+    }
+    ifstream see("admin_passwords.txt");
+    string pass;
+    Stack adminpass;
+    if (!see.is_open())
+    {
+        cerr << "Error opening file." << endl;
+        return;
+    }
+    while (see >> pass && counter != 0)
+    {
+        adminpass.push(pass);
+        counter--;
+    }
+    string temporary;
+    temporary = adminpass.topElement();
+    found = false;
+    int tries = 5;
+    while (!found && tries > 0)
+    {
+        cout << "Enter Password: ";
+        cin >> pass;
+        if (pass == temporary)
+        {
+            found = true;
+            cout << "Welcome " << name << "!" << endl;
+            aDashboard();
+
+        }
+        if (!found)
+        {
+            cout << "Incorrect password. Please try again." << endl;
+            tries--;
+            cout << "Tries left: " << tries << endl;
+        }
+    }
+    if (!found)
+    {
+        cout << "Login session locked!" << endl;
+    }
+}
+void student()
+{
+    cout << setw(65) << "Welcome student!" << endl;
+    ifstream read("student_names.txt");
+    Stack studentnames;
+    int counter = 0, temp = 0;
+    string name;
+    if (!read.is_open())
+    {
+        cerr << "Error opening file." << endl;
+        return;
+    }
+    while (read >> name)
+    {
+        studentnames.push(name);
+        counter++;
+    }
+    temp = counter;
+    read.close();
+    bool found = false;
+    while (!found)
+    {
+        cout << "Enter your name:";
+        cin >> name;
+        Stack tempStack;
+        while (!studentnames.empty())
+        {
+            string poppedName = studentnames.topElement();
+            studentnames.pop();
+            tempStack.push(poppedName);
+            if (poppedName == name)
+            {
+                found = true;
+                break;
+            }
+            counter--;
+        }
+        while (!tempStack.empty())
+        {
+            studentnames.push(tempStack.topElement());
+            tempStack.pop();
+        }
+        //Here the first stack is stored again so that it can be used again if the username is enetered incorrectly.
+        if (!found)
+        {
+            cout << "User not found. Please try again." << endl;
+            counter = temp;
+        }
+    }
+    ifstream see("student_passwords.txt");
+    string pass;
+    Stack Studentpass;
+    if (!see.is_open())
+    {
+        cerr << "Error opening file." << endl;
+        return;
+    }
+    while (see >> pass && counter != 0)
+    {
+        Studentpass.push(pass);
+        counter--;
+    }
+    string temporary;
+    temporary = Studentpass.topElement();
+    found = false;
+    int tries = 5;
+    while (!found && tries > 0)
+    {
+        cout << "Enter Password: ";
+        cin >> pass;
+        if (pass == temporary)
+        {
+            found = true;
+            cout << "Welcome " << name << "!" << endl;
+            sDashboard(temp);
+        }
+        if (!found)
+        {
+            cout << "Incorrect password. Please try again." << endl;
+            tries--;
+            cout << "Tries left: " << tries << endl;
+        }
+    }
+    if (!found)
+    {
+        cout << "Login session locked!" << endl;
+    }
+}
+*/

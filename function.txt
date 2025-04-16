@@ -1,0 +1,64 @@
+void sDashboard(int& temp)
+{
+    cout << "Available Book Genre: ";
+    string select;
+    ifstream file("books.txt");
+    if (!file.is_open()) 
+    {
+        cerr << "Error opening file: books.txt" << endl;
+        return;
+    }
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    string line;
+    // Read the first line for genres
+    if (getline(file, line)) {
+        size_t pos = 0;
+        while ((pos = line.find('\t')) != string::npos) 
+        {
+            string genre = line.substr(0, pos);
+            line.erase(0, pos + 1);
+            Node* newNode = new Node();
+            newNode->data = genre;
+            newNode->next = nullptr;
+            if (head == nullptr) 
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else 
+            {
+                tail->next = newNode;
+                tail = newNode;
+            }
+        }
+        // Add the last genre
+        if (!line.empty()) 
+        {
+            Node* newNode = new Node();
+            newNode->data = line;
+            newNode->next = nullptr;
+            if (head == nullptr) 
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else 
+            {
+                tail->next = newNode;
+                tail = newNode;
+            }
+        }
+    }
+    file.close();
+    Node* current = head;
+    while (current != nullptr) 
+    {
+        cout << current->data << '\t';
+        current = current->next;
+    }
+    cout << endl;
+    cout << "Select Book Genre:";
+    cin >> select;
+    cout << "Avaialable Books: " << endl;
+}

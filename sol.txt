@@ -1,0 +1,200 @@
+To allow the user to choose a genre and then display all available books for that genre, we can modify the program to store the books associated with each genre. This can be achieved by creating a more complex data structure such as a linked list of genres where each genre node contains another linked list of books.
+
+Here's how you can modify the program:
+
+1. Define a structure for book nodes.
+2. Define a structure for genre nodes that contains a linked list of books.
+3. Modify the `sDashboard` function to populate these structures.
+4. Add functionality to prompt the user to choose a genre and display the corresponding books.
+
+Here's the updated code:
+
+```cpp
+#include <iostream>
+#include <fstream>
+#include <string>
+
+// Node structure for linked list of books
+struct BookNode {
+    std::string book;
+    BookNode* next;
+};
+
+// Node structure for linked list of genres
+struct GenreNode {
+    std::string genre;
+    BookNode* books;
+    GenreNode* next;
+};
+
+// Function to add a book to the linked list of books
+void addBook(BookNode*& head, const std::string& book) {
+    BookNode* newBook = new BookNode();
+    newBook->book = book;
+    newBook->next = head;
+    head = newBook;
+}
+
+// Function to display books in a linked list
+void displayBooks(BookNode* head) {
+    BookNode* current = head;
+    while (current != nullptr) {
+        std::cout << current->book << std::endl;
+        current = current->next;
+    }
+}
+
+// Function to free the memory allocated for the books linked list
+void freeBooks(BookNode* head) {
+    while (head != nullptr) {
+        BookNode* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
+// Function to read genres and books from the file and create a linked list
+GenreNode* sDashboard() {
+    std::ifstream file("books.txt");
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: books.txt" << std::endl;
+        return nullptr;
+    }
+
+    GenreNode* genreHead = nullptr;
+    GenreNode* genreTail = nullptr;
+    std::string line;
+
+    // Read the first line for genres
+    if (std::getline(file, line)) {
+        size_t pos = 0;
+        while ((pos = line.find('\t')) != std::string::npos) {
+            std::string genre = line.substr(0, pos);
+            line.erase(0, pos + 1);
+
+            GenreNode* newGenre = new GenreNode();
+            newGenre->genre = genre;
+            newGenre->books = nullptr;
+            newGenre->next = nullptr;
+
+            if (genreHead == nullptr) {
+                genreHead = newGenre;
+                genreTail = newGenre;
+            } else {
+                genreTail->next = newGenre;
+                genreTail = newGenre;
+            }
+        }
+
+        // Add the last genre (if any)
+        if (!line.empty()) {
+            GenreNode* newGenre = new GenreNode();
+            newGenre->genre = line;
+            newGenre->books = nullptr;
+            newGenre->next = nullptr;
+
+            if (genreHead == nullptr) {
+                genreHead = newGenre;
+                genreTail = newGenre;
+            } else {
+                genreTail->next = newGenre;
+                genreTail = newGenre;
+            }
+        }
+    }
+
+    // Read the following lines for books
+    while (std::getline(file, line)) {
+        GenreNode* currentGenre = genreHead;
+        size_t pos = 0;
+        while ((pos = line.find('\t')) != std::string::npos) {
+            std::string book = line.substr(0, pos);
+            line.erase(0, pos + 1);
+
+            if (currentGenre != nullptr) {
+                addBook(currentGenre->books, book);
+                currentGenre = currentGenre->next;
+            }
+        }
+
+        // Add the last book (if any)
+        if (!line.empty() && currentGenre != nullptr) {
+            addBook(currentGenre->books, line);
+        }
+    }
+
+    file.close();
+    return genreHead;
+}
+
+// Function to display genres and allow user to choose one
+void chooseGenreAndDisplayBooks(GenreNode* genreHead) {
+    if (genreHead == nullptr) {
+        std::cerr << "No genres available." << std::endl;
+        return;
+    }
+
+    std::cout << "Available genres:" << std::endl;
+    GenreNode* currentGenre = genreHead;
+    int index = 1;
+    while (currentGenre != nullptr) {
+        std::cout << index << ". " << currentGenre->genre << std::endl;
+        currentGenre = currentGenre->next;
+        index++;
+    }
+
+    int choice;
+    std::cout << "Choose a genre by entering the corresponding number: ";
+    std::cin >> choice;
+
+    currentGenre = genreHead;
+    index = 1;
+    while (currentGenre != nullptr && index < choice) {
+        currentGenre = currentGenre->next;
+        index++;
+    }
+
+    if (currentGenre != nullptr) {
+        std::cout << "Books available in " << currentGenre->genre << ":" << std::endl;
+        displayBooks(currentGenre->books);
+    } else {
+        std::cerr << "Invalid choice." << std::endl;
+    }
+}
+
+// Function to free the memory allocated for the genres and books linked list
+void freeGenres(GenreNode* head) {
+    while (head != nullptr) {
+        GenreNode* temp = head;
+        head = head->next;
+        freeBooks(temp->books);
+        delete temp;
+    }
+}
+
+int main() {
+    GenreNode* genresList = sDashboard();
+    chooseGenreAndDisplayBooks(genresList);
+    freeGenres(genresList);
+    return 0;
+}
+```
+
+### Explanation
+
+1. **BookNode Structure**: Defines a `BookNode` structure to store book data and a pointer to the next book node.
+2. **GenreNode Structure**: Defines a `GenreNode` structure to store genre data, a linked list of books, and a pointer to the next genre node.
+3. **addBook Function**: Adds a book to the linked list of books.
+4. **displayBooks Function**: Displays all books in the linked list.
+5. **freeBooks Function**: Frees the memory allocated for the books linked list.
+6. **sDashboard Function**: 
+   - Reads the genres from the first line of the file and creates a linked list of genres.
+   - Reads the following lines of the file and adds books to the corresponding genre.
+7. **chooseGenreAndDisplayBooks Function**: 
+   - Displays the available genres.
+   - Prompts the user to choose a genre and displays the corresponding books.
+8. **freeGenres Function**: Frees the memory allocated for the genres and books linked list.
+9. **main Function**: 
+   - Calls `sDashboard` to populate the genres and books.
+   - Calls `chooseGenreAndDisplayBooks` to allow the user to choose a genre and display the books.
+   - Calls `freeGenres` to free the allocated memory.

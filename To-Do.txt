@@ -1,0 +1,21 @@
+smart library system
+
+User Authentication          -Done
+Upon login, users (both students and staff) are directed to their personalized dashboard.          -Done
+The dashboard displays borrowed books, due dates, and any pending fines.
+Users can update their profiles, change passwords, and view notifications.
+Book Search and Retrieval          -Done
+Users can search for books by Genre.          -Done
+The system provides real-time availability status (e.g., “Available,” “On Loan,” “Reserved”).
+Users can see book details and summaries.
+Book Issuance and Return
+The system records issuance dates and due dates.
+Book Recommendations
+Based on borrowing history, the system suggests related books.
+Recommendations can be genre-specific or personalized.
+Admin Features
+Admins have a separate dashboard for managing the library.
+They can add new books, update details, and mark books as lost or damaged.
+Admins can generate reports (e.g., most borrowed books, overdue books).
+Notifications and Alerts
+Admins receive alerts for critical events for low stock.

@@ -1,0 +1,42 @@
+Fantasy	Sci-fi	Thrillers	Horror			
+Court of Thorns and Roses	Aliens	A Simple Plan	A Head Full of Ghosts
+A Dance with Dragons	Altered Carbon	Along Came a Spider	Bird Box
+A Game of Thrones	Anathem	Angels & Demons	Carrie
+A Song of Ice and Fire	Brave New World	Big Little Lies	Coraline
+An Ember in the Ashes	Childhood's End	Black Ice	Dracula
+Assassins Apprentice	Dune	Blonde Hair, Blue Eyes	Frankenstein
+Black Sun	Ender's Game	Bloodline	Ghost Story
+Blood of Elves	Fahrenheit 451	Before I Go to Sleep	Gideon the Ninth
+City of Stairs	Foundation	Dark Places	Haunting of Hill House
+Crooked Kingdom	Frankenstein	Deception Point	Heart-Shaped Box
+Daughter of Smoke and Bone	Gateway	Don’t Look Back	Hell House
+Elantris	Hyperion	Endgame	Her Body and Other Parties
+Fellowship of the Ring	I, Robot	Finders Keepers	Hex
+Foundryside	Leviathan Wakes	Gone Girl	Horrorstör
+Gardens of the Moon	Neuromancer	I Am Watching You	House of Leaves
+Good Omens	Old Man's War	In the Woods	I Am Legend
+Harry Potter and the Philosophers Stone	Pattern Recognition	Inferno	Interview with the Vampire
+In the Name of the Wind	Ready Player One	Into the Water	It
+Jonathan Strange & Mr Norrell	Red Mars	Killing Floor	Joyland
+King of Scars	Ringworld	Little Fires Everywhere	Let the Right One In
+Mistborn: The Final Empire	Slaughterhouse-Five	Lock Every Door	Mexican Gothic
+Neverwhere	Snow Crash	Misery	NOS4A2
+Priory of the Orange Tree	Solaris	Mr. Mercedes	Pet Sematary
+Queen of Shadows	Starship Troopers	One by One	Rebecca
+Red Queen	The Dispossessed	Orphan X	Ring
+Shadow and Bone	The Expanse	Pines	Rosemary's Baby
+Six of Crows	The Forever War	Pretty Girls	Slade House
+Sorcerer to the Crown	The Hitchhiker's Guide to the Galaxy	Red Dragon	Something Wicked This Way Comes
+Spinning Silver	The Left Hand of Darkness	Room	Station Eleven
+The Black Prism	The Man in the High Castle	Sharp Objects	Swan Song
+The Eye of the World	The Martian	Shutter Island	The Amityville Horror
+The Hobbit	The Moon is a Harsh Mistress	Silence of the Lambs	The Exorcist
+The Lies of Locke Lamora	The Road	Stillhouse Lake	The Girl Next Door
+The Name of the Wind	The Stars My Destination	Sycamore Row	The Last House on Needless Street
+The Poppy War	The War of the Worlds	The Girl on the Train	The Shining
+The Shadow of What Was Lost	Ubik	The Girl with the Dragon Tattoo	The Silence of the Lambs
+The Way of Kings	V	The Silent Patient	The Stand
+The Witcher: The Last Wish	Wool	The Woman in Cabin 10	The Wasp Factory
+Throne of Glass	World War Z	Then She Was Gone	World War Z
+Uprooted	Zodiac	Without Fail	
+Friday night at freddies
